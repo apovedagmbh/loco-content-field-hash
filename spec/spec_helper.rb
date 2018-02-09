@@ -1,5 +1,5 @@
 require "bundler/setup"
-require "locomotivecms/fields_to_hash"
+require "locomotivecms/fields_to_hash/filters.rb"
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure

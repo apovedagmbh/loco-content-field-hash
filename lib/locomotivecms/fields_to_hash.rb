@@ -1,7 +1,4 @@
 require "locomotivecms/fields_to_hash/version"
+require "locomotivecms/fields_to_hash/filters"
 
-module Locomotivecms
-  module FieldsToHash
-    # Your code goes here...
-  end
-end
+Liquid::Template.register_filter(Locomotivecms::FieldsToHash::Filters)
