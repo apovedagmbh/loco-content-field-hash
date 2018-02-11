@@ -1,6 +1,7 @@
 RSpec.describe Locomotivecms::FieldsToHash::Filters do
-   include Locomotivecms::FieldsToHash::Filters
+  include Locomotivecms::FieldsToHash::Filters
   describe 'fields_to_hash' do
+    # TODO: Test with instance of Locomotive::Steam::Liquid::Drops::ContentEntry
     content_entry = {
       field_1: 'Field 1',
       field_desc_1: 'Lorem ipsum 1',
@@ -20,8 +21,13 @@ RSpec.describe Locomotivecms::FieldsToHash::Filters do
         { field: 'Field 2', field_desc: 'Lorem ipsum 2' },
         { field: 'Field 10', field_desc: 'Lorem ipsum 10' },
       ]
+      expect(fields_to_hash(content_entry, { 'first' => 'field', 'second' => 'field_desc' })).to match_array(hash_array)
+    end
 
-      expect(fields_to_hash(content_entry, { first: 'field', second: 'field_desc' })).to match_array(hash_array)
+    context 'missing arguments' do
+      it 'returns an empty array' do
+        expect(fields_to_hash(content_entry, {})).to match_array([])
+      end
     end
   end
 end
