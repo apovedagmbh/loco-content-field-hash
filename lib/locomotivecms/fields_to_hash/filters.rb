@@ -15,10 +15,17 @@ module Locomotivecms
           filtered_fields = []
 
           for i in 0..([first_keys.length, second_keys.length].max - 1)
-            hash = Hash.new
-            hash[first.to_s] = fields[first_keys[i]]
-            hash[second.to_s] = fields[second_keys[i]]
-            filtered_fields << hash
+            # TODO: Make sure the index of the fields field_i match for `first` and `second`
+            first_entry = fields[first_keys[i]]
+            second_entry = fields[second_keys[i]]
+
+            if first_entry.is_a? String and !first_entry.empty?
+              # Only return fields where the `first` value is set
+              hash = Hash.new
+              hash[first.to_s] = fields[first_keys[i]]
+              hash[second.to_s] = fields[second_keys[i]]
+              filtered_fields << hash
+            end
           end
         end
 

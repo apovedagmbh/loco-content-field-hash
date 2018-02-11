@@ -16,12 +16,27 @@ RSpec.describe Locomotivecms::FieldsToHash::Filters do
     }
 
     it "creates a hash from a content entry's field" do
-      hash_array = [
+      filtered_fields = [
         { 'field' => 'Field 1', 'field_desc' => 'Lorem ipsum 1' },
         { 'field' => 'Field 2', 'field_desc' => 'Lorem ipsum 2' },
         { 'field' => 'Field 10', 'field_desc' => 'Lorem ipsum 10' },
       ]
-      expect(fields_to_hash(content_entry, { 'first' => 'field', 'second' => 'field_desc' })).to match_array(hash_array)
+      expect(fields_to_hash(content_entry, { 'first' => 'field', 'second' => 'field_desc' })).to match_array(filtered_fields)
+    end
+
+    context 'fields without value' do
+      it 'only returns fields where the `first` argument is populated' do
+        content_entry[:field_1] = nil
+        content_entry[:field_2] = ''
+        content_entry[:field_3] = 'Field 3'
+
+        filtered_fields = [
+          { 'field' => 'Field 3', 'field_desc' => nil },
+          { 'field' => 'Field 10', 'field_desc' => 'Lorem ipsum 10' },
+        ]
+
+        expect(fields_to_hash(content_entry, { 'first' => 'field', 'second' => 'field_desc' })).to match_array(filtered_fields)
+      end
     end
 
     context 'missing arguments' do
