@@ -16,8 +16,8 @@ module Locomotivecms
 
           for i in 0..([first_keys.length, second_keys.length].max - 1)
             hash = Hash.new
-            hash[first] = fields[first_keys[i]]
-            hash[second] = fields[second_keys[i]]
+            hash[first.to_s] = fields[first_keys[i]]
+            hash[second.to_s] = fields[second_keys[i]]
             filtered_fields << hash
           end
         end
