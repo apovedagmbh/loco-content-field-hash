@@ -39,8 +39,14 @@ RSpec.describe Locomotivecms::FieldsToHash::Filters do
       end
     end
 
-    context 'missing arguments' do
-      it 'returns an empty array' do
+    context 'bad arguments' do
+      it 'returns an empty array when a string is passed for the content_entry' do
+        expect(fields_to_hash('string', { 'first' => 'field', 'second' => 'field_desc' })).to match_array([])
+      end
+      it "returns an empty array when `nil` is passed for the content_entry" do
+        expect(fields_to_hash(nil, { 'first' => 'field', 'second' => 'field_desc' })).to match_array([])
+      end
+      it 'returns an empty array when field names (first, second) are not specified' do
         expect(fields_to_hash(content_entry, {})).to match_array([])
       end
     end

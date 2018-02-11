@@ -4,7 +4,7 @@ module Locomotivecms
       def fields_to_hash(fields, options)
         filtered_fields = []
 
-        if options['first'].is_a? String and options['second'].is_a? String
+        if options['first'].respond_to? :to_sym and options['second'].respond_to? :to_sym and fields.respond_to? :to_hash
           first = options['first'].to_sym
           second = options['second'].to_sym
 
