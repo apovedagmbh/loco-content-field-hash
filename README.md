@@ -1,34 +1,114 @@
 # Locomotivecms::FieldsToHash
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/locomotivecms/fields_to_hash`. To experiment with that code, run `bin/console` for an interactive prompt.
+## Functionality
 
-TODO: Delete this and the text above, and describe your gem
+A gem for LocomotiveCMS. Filters indexed field pairs from a content entry and serves them as a hash.
+
+### Example
+
+#### The issue
+
+A `coach` might teach a variable number of several `subjects`, and each of them has a personalized description.
+
+Obvious solution: create a content type `subjects`, relate to it from the `coach` with a `has_many`/`belongs_to` relationship:
+
+```yaml
+# app/content_types/coaches.yml
+fields:
+- subjects:
+    type: has_many
+    target: subjects
+    inverse_of: coaches
+```
+
+Looping over these subjects to display them is a breeze. However, Locomotive makes it currently quite inefficient to fill such related content types. From a backend-administrator's perspective, it might be beneficial to be able to fill all the `subjects` on the same mask, which would lead to a `coach` content type definition like this:
+
+
+```yaml
+# app/content_types/coaches.yml
+fields:
+- subject_1:
+    type: string
+- subject_desc_1:
+    type: text
+    text_formatting: markdown
+- subject_2:
+    type: string
+- subject_desc_2:
+    type: text
+    text_formatting: markdown
+```
+
+Like this we have to test for a value in Liquid templates separately and can't just create a loop handling all the available subjects. What a pain!
+
+### The solution
+
+This gem provides the `fields_to_hash` filter. It takes a set of indexed fields as shown above and returns an array of hashes, each containing a pair of `subject`/`subject_desc` in the example above.
+
+### Usage
+
+**Requirement:** The content type contains an arbitrary number of pairs of fields such as `subject`/`subject_desc`. The field name is followed by an underscore and index number: `subject_1`/`subject_desc_1`, `subject_2`/`subject_desc_2`, etc.
+
+In liquid tempaltes you can then use the `fields_to_hash` filter on a content entry, specifying the field names without the index at the end:
+
+```liquid
+app/views/pages/coaches/content_type_template.yml
+{% subjects = coach | fields_to_hash: first: 'subject', second: 'subject_desc' %}
+```
+
+This will give you an array of hashes with the field names you just passed as keys:
+
+```ruby
+{ { 'subject' => 'math', 'subject_desc': 'Lorem ipsum' }, { 'subject' => 'german', 'subject_desc': 'More lorem ipsum' }}
+```
+
+Now you can handle it as you would any `has_many` relationship
+
+```liquid
+app/views/pages/coaches/content_type_template.yml
+{% if subjects.size > 0 %}
+  <h1>Subjects</h1>
+  {% for subject in subject %}
+    <h2>{{ subject.subject }}</h1>
+    <p>{{ subject.subject_desc }}</p>
+  {% endfor %}
+{% endif %}
+```
 
 ## Installation
 
-Add this line to your application's Gemfile:
+### Wagon
+
+Add this to the Gemfile of your site in wagon (local):
 
 ```ruby
-gem 'locomotivecms-fields_to_hash'
+group :misc do
+  gem 'locomotivecms-fields_to_hash', require: true, git: 'git@gitlab.apoveda.org:apoveda-web-engineering/loco-content-field-hash.git'
+end
 ```
 
-And then execute:
+Run `bundle install`.
 
-    $ bundle
+### Engine
 
-Or install it yourself as:
+Add this to the Gemfile of your engine to use it on the server:
 
-    $ gem install locomotivecms-fields_to_hash
+```ruby
+gem 'locomotivecms-fields_to_hash', require: true, git: 'git@gitlab.apoveda.org:apoveda-web-engineering/loco-content-field-hash.git'
+```
 
-## Usage
-
-TODO: Write usage instructions here
+Run `bundle install`
 
 ## Development
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+Run `bundle install` before starting development.
+
+To run tests:
+
+```
+rspec
+```
 
 ## Contributing
 
