@@ -94,7 +94,7 @@ Run `bundle install`.
 Add this to the Gemfile of your engine to use it on the server, specifying the version you want as a tag:
 
 ```ruby
-gem 'locomotivecms-fields_to_hash', require: true, git: 'https://oauth:<gitlab deploy user API token>@gitlab.apoveda.org/apoveda-web-engineering/loco-content-field-hash.git', tag: 'v0.1.0'
+gem 'locomotivecms-fields_to_hash', require: true, git: 'https://github.com/apovedagmbh/loco-content-field-hash.git', tag: 'v0.1.0'
 ```
 
 Run `bundle install`

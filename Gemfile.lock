@@ -1,38 +1,38 @@
 PATH
   remote: .
   specs:
-    locomotivecms-fields_to_hash (0.1.0)
+    locomotivecms-fields_to_hash (0.2.0)
 
 GEM
   remote: https://rubygems.org/
   specs:
-    diff-lcs (1.3)
-    rake (10.5.0)
-    rspec (3.7.0)
-      rspec-core (~> 3.7.0)
-      rspec-expectations (~> 3.7.0)
-      rspec-mocks (~> 3.7.0)
-    rspec-core (3.7.1)
-      rspec-support (~> 3.7.0)
-    rspec-expectations (3.7.0)
+    diff-lcs (1.4.4)
+    rake (13.0.1)
+    rspec (3.10.0)
+      rspec-core (~> 3.10.0)
+      rspec-expectations (~> 3.10.0)
+      rspec-mocks (~> 3.10.0)
+    rspec-core (3.10.0)
+      rspec-support (~> 3.10.0)
+    rspec-expectations (3.10.0)
       diff-lcs (>= 1.2.0, < 2.0)
-      rspec-support (~> 3.7.0)
-    rspec-mocks (3.7.0)
+      rspec-support (~> 3.10.0)
+    rspec-mocks (3.10.0)
       diff-lcs (>= 1.2.0, < 2.0)
-      rspec-support (~> 3.7.0)
-    rspec-support (3.7.1)
+      rspec-support (~> 3.10.0)
+    rspec-support (3.10.0)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
-  bundler (~> 1.16)
+  bundler (>= 1.16)
   locomotivecms-fields_to_hash!
-  rake (~> 10.0)
-  rspec (~> 3.0)
+  rake (>= 10.0)
+  rspec (>= 3.0)
 
 RUBY VERSION
-   ruby 2.3.1p112
+   ruby 2.7.0p0
 
 BUNDLED WITH
-   1.16.0
+   2.1.2

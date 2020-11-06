@@ -1,4 +1,4 @@
-require 'solid'
+require 'liquid'
 
 require "locomotivecms/fields_to_hash/version"
 require "locomotivecms/fields_to_hash/filters"
